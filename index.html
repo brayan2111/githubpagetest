@@ -17,6 +17,8 @@ canvas{
     position:absolute;
     top:0;
     left:0;
+    width:100%;
+    height:100%;
     z-index:1;
 }
 
@@ -26,7 +28,7 @@ canvas{
     top:5%;
     width:100%;
     text-align:center;
-    font-size:38px;
+    font-size:6vw; /* responsive */
     color:#ff77cc;
     text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff;
     z-index:10;
@@ -37,8 +39,10 @@ canvas{
     position:absolute;
     top:50%;
     left:50%;
-    width:600px;
-    height:600px;
+    width:50vw;
+    max-width:600px;
+    height:50vw;
+    max-height:600px;
     transform:translate(-50%,-50%);
     z-index:2;
 }
@@ -47,8 +51,8 @@ canvas{
     position:absolute;
     top:50%;
     left:50%;
-    width:500px;
-    height:500px;
+    width:80%;
+    height:80%;
     border-radius:50%;
     box-shadow: 0 0 40px 20px #ff00ff, 0 0 120px 40px #ff00ff;
     transform:translate(-50%,-50%) rotateX(65deg);
@@ -58,8 +62,8 @@ canvas{
     position:absolute;
     top:50%;
     left:50%;
-    width:230px;
-    height:230px;
+    width:35%;
+    height:35%;
     transform:translate(-50%,-50%);
     background:black;
     border-radius:50%;
@@ -71,63 +75,59 @@ canvas{
     top:50%;
     left:50%;
     color:white;
-    font-size:18px;
+    font-size:3vw;
     text-shadow:0 0 10px #ff00ff;
     white-space:nowrap;
     z-index:6;
 }
 
-/* CARTA ROMÁNTICA TRANSPARENTE (DETRO DEL ANILLO) */
+/* CARTA ROMÁNTICA TRANSPARENTE */
 .left-card{
     position:absolute;
-    width:300px;
-    height:350px;
+    width:40vw;
+    max-width:300px;
+    height:auto;
     top:50%;
-    right:63%;
-    transform:translate(-50%,-50%);
-    background:rgba(255,182,193,0.4); /* rosa transparente */
+    left:10%;
+    transform:translateY(-50%);
+    background:rgba(255,182,193,0.4);
     border-radius:25px;
     box-shadow:0 10px 30px rgba(255,0,200,0.3);
     display:flex;
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:30px;
+    padding:20px;
     box-sizing:border-box;
-    z-index:3; /* detrás del anillo y palabras */
+    z-index:3;
 }
 .left-card p{
-    font-size:20px;
-    line-height:1.5;
+    font-size:4vw;
+    line-height:1.4;
     color:#4d062d;
 }
 
-/* MARIPOSAS DECORATIVAS EN LA CARTA */
+/* MARIPOSAS EN CARTA */
 .left-card::before, .left-card::after{
     content:"🦋";
-    font-size:40px;
+    font-size:5vw;
     position:absolute;
-    top:10px;
+    top:5px;
 }
-.left-card::before{
-    left:10px;
-    transform: rotate(-20deg);
-}
-.left-card::after{
-    right:10px;
-    transform: rotate(20deg);
-}
+.left-card::before{ left:5px; transform: rotate(-20deg);}
+.left-card::after{ right:5px; transform: rotate(20deg);}
 
-/* SECCIÓN DERECHA: VIDEO + FOTOS CON BORDE Y MARIPOSAS */
+/* VIDEO + FOTOS DERECHA */
 .right-media{
     position:absolute;
     top:50%;
-    left:85%; /* a la derecha del anillo */
-    transform:translate(-50%,-50%);
-    width:320px;
+    right:5%;
+    transform:translateY(-50%);
+    width:45vw;
+    max-width:350px;
     display:flex;
     flex-direction:column;
-    gap:15px;
+    gap:10px;
     padding:10px;
     background:rgba(255,182,193,0.3);
     border-radius:25px;
@@ -137,38 +137,39 @@ canvas{
 }
 .right-media::before, .right-media::after{
     content:"🦋";
-    font-size:35px;
+    font-size:4vw;
     position:absolute;
     top:5px;
 }
-.right-media::before{
-    left:5px;
-    transform: rotate(-20deg);
-}
-.right-media::after{
-    right:5px;
-    transform: rotate(20deg);
+.right-media::before{ left:5px; transform: rotate(-20deg);}
+.right-media::after{ right:5px; transform: rotate(20deg);}
+.right-media video{
+    width:100%;
+    border-radius:10px;
 }
 
-.right-media video{
-    width:180px;
-    border-radius:10px;
-    margin-left:50px; /* mover un poco a la derecha */
-}
+/* Fotos en fila responsive */
 .photos{
     display:flex;
-    flex-direction:row; /* fotos en fila */
-    gap:10px;
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:5px;
     justify-content:center;
 }
 .photos img{
-    width:90px;
+    width:30%;
+    min-width:60px;
     border-radius:8px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 .photos img:hover{
     transform: scale(1.05);
     box-shadow:0 0 20px #ff77cc;
+}
+
+@media(max-width:600px){
+    .left-card p{ font-size:5vw; }
+    .word{ font-size:4vw; }
 }
 </style>
 </head>
@@ -177,7 +178,7 @@ canvas{
 
 <div class="title">Feliz San Valentín ❤️</div>
 
-<!-- GALAXIA CENTRAL -->
+<!-- GALAXIA -->
 <div class="galaxy">
     <div class="system">
         <div class="ring" id="ring"></div>
@@ -194,19 +195,20 @@ canvas{
     </div>
     <div class="planet"></div>
 </div>
-<!-- Música de fondo -->
-<audio id="musica" src="musica.mp3" autoplay loop></audio>
 
-<!-- CARTA TRANSPARENTE DETRÁS DEL ANILLO -->
+<!-- AUDIO -->
+<audio id="musica" src="musica.mp3" loop></audio>
+
+<!-- CARTA -->
 <div class="left-card">
     <p>Para mí, tú eres mi mundo entero.<br>
     Hoy 14 de febrero agradezco tenerte conmigo.<br>
     Cada momento contigo es un tesoro, y siempre deseo que nuestra historia continúe brillando como las estrellas. 💖</p>
 </div>
 
-<!-- VIDEO + 3 FOTOS A LA DERECHA -->
+<!-- VIDEO + FOTOS -->
 <div class="right-media">
-    <video id="video" src="video.mp4" autoplay muted></video>
+    <video id="video" src="video.mp4" muted playsinline></video>
     <div class="photos">
         <img src="foto1.jpeg" alt="Foto 1">
         <img src="foto2.jpeg" alt="Foto 2">
@@ -215,23 +217,19 @@ canvas{
 </div>
 
 <script>
-// --- Script original de estrellas, meteoritos y palabras ---
+// --- Canvas de estrellas ---
 const canvas = document.getElementById("space");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-/* ESTRELLAS */
 let stars = [];
 for(let i=0;i<600;i++){
     stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, alpha:Math.random() });
 }
-
-/* METEORITOS */
 let meteors = [];
-function createMeteor(){
-    meteors.push({ x:Math.random()*canvas.width, y:-20, length:Math.random()*80+50, speed:Math.random()*6+4, radius:2 });
-}
+function createMeteor(){ meteors.push({ x:Math.random()*canvas.width, y:-20, length:Math.random()*80+50, speed:Math.random()*6+4, radius:2 }); }
 function drawSpace(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     stars.forEach(star=>{
@@ -263,42 +261,44 @@ function drawSpace(){
         ctx.arc(m.x,m.y,m.radius,0,Math.PI*2);
         ctx.fillStyle="black";
         ctx.fill();
-        m.y += m.speed;
-        m.x += m.speed;
-        if(m.y > canvas.height || m.x > canvas.width){ meteors.splice(i,1); }
+        m.y += m.speed; m.x += m.speed;
+        if(m.y>canvas.height||m.x>canvas.width) meteors.splice(i,1);
     });
     requestAnimationFrame(drawSpace);
 }
 setInterval(createMeteor,700);
 drawSpace();
 
-/* ORBITA PERFECTA */
+// --- Orbita palabras ---
 const words = document.querySelectorAll(".word");
 const ring = document.getElementById("ring");
 const radius = 270;
 let baseAngle = 0;
-function animate(){
+function animateWords(){
     baseAngle += 0.01;
     ring.style.transform = `translate(-50%,-50%) rotateX(65deg) rotateZ(${baseAngle}rad)`;
     const total = words.length;
     words.forEach((word,i)=>{
-        const angle = baseAngle + (i * (Math.PI*2/total));
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius * 0.5;
+        const angle = baseAngle + (i*(Math.PI*2/total));
+        const x = Math.cos(angle)*radius;
+        const y = Math.sin(angle)*radius*0.5;
         word.style.transform = `translate(-50%,-50%) translate(${x}px,${y}px)`;
     });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animateWords);
 }
-animate();
+animateWords();
 
-// --- Video de 10 segundos con loop ---
+// --- Video loop 10s ---
 const video = document.getElementById('video');
-video.play().catch(()=>{}); // intentar autoplay
-setInterval(() => {
-    video.currentTime = 0;
-    video.play().catch(()=>{}); // reiniciar cada 10s
-}, 10000);
-video.addEventListener('canplay', playVideoLoop);
+video.addEventListener('loadedmetadata', ()=>{
+    video.play().catch(()=>{});
+    setInterval(()=>{ video.currentTime=0; video.play().catch(()=>{}); }, 10000);
+});
+
+// --- Música autoplay móvil ---
+const musica = document.getElementById('musica');
+// iOS y algunos Android requieren un evento user gesture
+document.body.addEventListener('click', ()=>{ musica.play().catch(()=>{}); }, {once:true});
 </script>
 </body>
 </html>
